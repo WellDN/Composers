@@ -8,7 +8,7 @@ module.exports = {
   theme: {
       extend: {
         colors: {
-            'sexo': '#361D0F',
+            'rwood': '#361D0F',
         },
      },
   },

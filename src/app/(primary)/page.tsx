@@ -1,10 +1,9 @@
 import Link from "next/link"
+// use flexbox (flex with flex-col (grid))
 
-export default function Page() {
+export default function Home() {
     return(
-      <div>
-    <div className="flex">
-    <div className="w-screen bg-sexo h-screen">
+    <main>
     <Link href="/">Polyhymnia</Link>
     <Link href="/login">
     Login
@@ -13,8 +12,6 @@ export default function Page() {
     Register
     </Link>
     <Link href="/single">single</Link>
-    </div>
-    </div>
-    </div>
+    </main>
     )
 }
