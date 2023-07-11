@@ -2,8 +2,7 @@ import Link from "next/link";
 
 export default function Register() {
     return(
-    <div>
-    <a href="/">Polyhymnia</a>
+    <div className="flex flex-col min-h-full mx-auto max-w-2xl px-4 pt-8 pb-16">
     <div className="flex justify-center align-middle m-60">
     <p>Register</p>
     <form action="post" noValidate>
