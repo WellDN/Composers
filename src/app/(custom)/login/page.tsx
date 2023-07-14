@@ -1,15 +1,6 @@
 import Link from "next/link";
 
-async function getData() {
-    const res = await fetch("http://localhost:8000/login")
-
-    if (!res.ok) {
-        throw new Error("Failed to fetch data")
-    }
-    return res.json()
-}
 export default async function Login() {
-    const data = await getData();
 
     return(
     <div>
