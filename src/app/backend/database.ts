@@ -1,5 +1,6 @@
 import 'dotenv/config'
-import { Pool } from 'pg'
+import pg from 'pg'
+const { Pool } = pg
 
 export const pool = new Pool({
     user: process.env.PGUSER,
@@ -9,3 +10,10 @@ export const pool = new Pool({
     port: Number(process.env.PGPORT)
 });
  
+pool.query('SELECT NOW()', (err, res) => {
+  if (err) {
+    console.error('Error connecting to the database', err);
+  } else {
+    console.log('Connected to the database');
+  }
+});
