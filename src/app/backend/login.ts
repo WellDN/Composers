@@ -30,8 +30,10 @@ export async function login(req: Request, res: Response) {
 export function logout(res: Response) {
     try {
         res.cookie('token', '', { expires: new Date(0), httpOnly: true });
+        res.redirect('/');
         return res.status(200).send('Logged out sucessfully');
     } catch(error) {
         console.error('unable to logout', error);
+        return res.status(500).send('Internal server error');
     }
 }

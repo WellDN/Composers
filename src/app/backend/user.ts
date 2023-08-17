@@ -1,7 +1,7 @@
 import 'dotenv/config';
-import { hashPassword } from './utils/utils';
-import { pool } from './database';
-import bcrypt from 'bcrypt';
+import { hashPassword } from './utils/utils.js';
+import { pool } from './database.js';
+import bcrypt from 'bcrypt'
 
 type User = {
     id: number;
@@ -10,7 +10,7 @@ type User = {
 }
 
 export async function createUser(username: string, password: string): Promise<User> {
-
+// maybe here
   try {
     const hashedPassword = await hashPassword(password);
 
@@ -65,32 +65,27 @@ export async function deleteUserByUsername(username: string): Promise<void> {
     }
 }
 
-export async function verifyLogin(username: User["username"], password: User["password"]) {
+export async function verifyLogin(username: User["username"], password: User["password"]) { //change username to email later on
     try {
-    const result = await pool.query('SELECT * FROM users WHERE password = $1', [username, password]);
-
+    const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
     if (result.rows.length === 0) {
         return null
     }
 
-    const userWithPassword = result.rows[0] as User
-    
+    const userWithPassword = await result.rows[0] as User
     if (!userWithPassword || !userWithPassword.password) {
         return null
     }
 
     const isValid = await bcrypt.compare(password, userWithPassword.password)
-
     if (!isValid) {
         return null
     }
 
     const { password: _password, ...userWithoutPassword } = userWithPassword
-
     return userWithoutPassword
     } catch (error) {
         console.error('Error verifying login: ', error)
         throw new Error('Failed to verify login')
     }
 }
-

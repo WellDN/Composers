@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
 import { createUser, getUserByUsername } from './user.js';
-import { hashPassword } from './utils/utils.js';
-import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
 export async function register(req: Request, res: Response) {
@@ -9,13 +7,11 @@ export async function register(req: Request, res: Response) {
     try {
         const existingUser = await getUserByUsername(username);
 
-        if (!existingUser) {
-            return res.status(409).send('Username already taken'); // make it to user not just username
+        if (existingUser) {
+            return res.status(409).send('Username already taken'); 
         }
 
-        const hashedPassword = await hashPassword(password);
-
-        const newUser = await createUser(username, hashedPassword);
+        const newUser = await createUser(username, password);
 
         return res.status(201).json(newUser);
     } catch (error) {
