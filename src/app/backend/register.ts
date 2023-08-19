@@ -1,17 +1,17 @@
 import { Request, Response } from 'express';
-import { createUser, getUserByUsername } from './user.js';
+import { createUser, getUserByEmail } from './user.js';
 import 'dotenv/config';
 
 export async function register(req: Request, res: Response) {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try {
-        const existingUser = await getUserByUsername(username);
+        const existingUser = await getUserByEmail(email);
 
         if (existingUser) {
-            return res.status(409).send('Username already taken'); 
+            return res.status(409).send('Email already taken'); 
         }
 
-        const newUser = await createUser(username, password);
+        const newUser = await createUser(email, password);
 
         return res.status(201).json(newUser);
     } catch (error) {

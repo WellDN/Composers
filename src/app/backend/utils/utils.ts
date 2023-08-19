@@ -11,3 +11,7 @@ export async function comparePasswords(
 ): Promise<boolean> {
   return bcrypt.compare(password, hashedPassword);
 }
+
+export function validateEmail(email: unknown): email is string {
+  return typeof email === "string" && email.length > 3 && email.includes("@");
+}

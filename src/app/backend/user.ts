@@ -3,20 +3,20 @@ import { hashPassword } from './utils/utils.js';
 import { pool } from './database.js';
 import bcrypt from 'bcrypt'
 
-type User = {
+export type User = {
     id: number;
-    username: string;
+    email: string;
     password: string;
 }
 
-export async function createUser(username: string, password: string): Promise<User> {
+export async function createUser(email: string, password: string): Promise<User> {
 // maybe here
   try {
     const hashedPassword = await hashPassword(password);
 
     const result = await pool.query(
-      'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *',
-      [username, hashedPassword]
+      'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *',
+      [email, hashedPassword]
     );
 
     return result.rows[0] as User;
@@ -41,9 +41,9 @@ export async function getUserById(id: number): Promise<User | null> {
   }
 }
 
-export async function getUserByUsername(username: string): Promise<User | null> {
+export async function getUserByEmail(email: string): Promise<User | null> {
   try {
-    const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
 
     if (result.rows.length === 0) {
       return null;
@@ -56,18 +56,18 @@ export async function getUserByUsername(username: string): Promise<User | null> 
   }
 }
 
-export async function deleteUserByUsername(username: string): Promise<void> {
+export async function deleteUserByEmail(email: string): Promise<void> {
     try {
-        await pool.query('DELETE FROM users WHERE username = $1', [username]);
+        await pool.query('DELETE FROM users WHERE email = $1', [email]);
     } catch(error) {
         console.error('Error deleting user:', error);
         throw new Error('Failed to delete user');
     }
 }
 
-export async function verifyLogin(username: User["username"], password: User["password"]) { //change username to email later on
+export async function verifyLogin(email: User["email"], password: User["password"]) {
     try {
-    const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     if (result.rows.length === 0) {
         return null
     }

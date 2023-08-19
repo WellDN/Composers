@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "ts-node --esm --files ./src/app/backend/server.ts",
+    "dev": "next dev",
+    "server": "ts-node --esm --files ./src/app/backend/server.ts",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deb": "concurrently \"npm run dev\" \"npm run server\""
   },
-  "type": "module",
+  "type":"module",
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.3",
@@ -35,6 +37,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
-    "@types/pg": "^8.10.2"
+    "@types/pg": "^8.10.2",
+    "concurrently": "^8.2.0"
   }
 }

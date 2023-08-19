@@ -3,12 +3,12 @@ import { verifyLogin } from "./user.js";
 import jwt from 'jsonwebtoken'
 
 export async function login(req: Request, res: Response) {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try {
-        const user = await verifyLogin(username, password);
+        const user = await verifyLogin(email, password);
 
         if (!user) {
-         return res.status(401).send('Invalid username or password');
+         return res.status(401).send('Invalid email or password');
         }
 
         const secretKey = process.env.JWT_SECRET;
@@ -30,7 +30,6 @@ export async function login(req: Request, res: Response) {
 export function logout(res: Response) {
     try {
         res.cookie('token', '', { expires: new Date(0), httpOnly: true });
-        res.redirect('/');
         return res.status(200).send('Logged out sucessfully');
     } catch(error) {
         console.error('unable to logout', error);
