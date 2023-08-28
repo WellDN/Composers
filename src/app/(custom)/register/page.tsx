@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod";
+import { useRouter } from "next/router";
 
 const registerSchema = z.object({
 email: z.string().min(1, {message: "Email is required"}).email(),
@@ -26,6 +27,8 @@ export default function Register() {
 resolver: zodResolver(registerSchema),
 });
 
+const router = useRouter();
+
    const onSubmit: SubmitHandler<RegisterSchema> = async (data) => {
         const res = await fetch("/register", {
             method: "POST", 
@@ -35,10 +38,12 @@ resolver: zodResolver(registerSchema),
             body: JSON.stringify(data),
         });
 
-        if (!res.ok) {
+        if (res.ok) {
+            router.push("/")
+        } else {
             throw new Error("Failed to fetch data")
         }
-        return res.json()
+
 }
 
     return(

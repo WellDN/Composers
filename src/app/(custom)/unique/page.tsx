@@ -1,4 +1,4 @@
-export default function ingle () {
+export default function unique () {
   return (
     <div className="text-center max-w-[80%] mx-auto">
     <a href="/">Polyhymnia </a>
