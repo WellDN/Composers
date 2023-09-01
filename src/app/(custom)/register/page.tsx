@@ -3,7 +3,6 @@ import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod";
-import { useRouter } from "next/router";
 
 const registerSchema = z.object({
 email: z.string().min(1, {message: "Email is required"}).email(),
@@ -27,7 +26,6 @@ export default function Register() {
 resolver: zodResolver(registerSchema),
 });
 
-const router = useRouter();
 
    const onSubmit: SubmitHandler<RegisterSchema> = async (data) => {
         const res = await fetch("/register", {
@@ -38,27 +36,24 @@ const router = useRouter();
             body: JSON.stringify(data),
         });
 
-        if (res.ok) {
-            router.push("/")
-        } else {
-            throw new Error("Failed to fetch data")
+        if (!res.ok) {
+            throw new Error(res.statusText)
         }
 
+        return res.json()
 }
 
     return(
-    <div className="flex flex-col min-h-full mx-auto max-w-2xl px-4 pt-8 pb-16">
-    <div className="flex justify-center align-middle m-60">
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="relative flex flex-1 flex-col items-center justify-center pb-16 pt-12">
+    <form onSubmit={handleSubmit(onSubmit)} className="h-full max-w-sm" action="/register">
     <label htmlFor="email" className="">
     Email address
     </label>
     <input
     type="email"
     id="email"
-    placeholder="email"
     {...register("email")}
-    className={`${
+    className={`w-96 px-2 py-1 text-sm leading-tight text-black border ${
               errors.email && "border-red-500"
             } rounded appearance-none focus:outline-none focus:shadow-outline`}
             />
@@ -67,14 +62,14 @@ const router = useRouter();
     {errors.email?.message}
     </p>
 )}
-    <label htmlFor="password" className="">
-    password
+    <label htmlFor="password" className="pt-7">
+    Password
     </label>
     <input
     id="password"
     type="password"
     {...register("password")}
-    className={`${
+    className={`w-full px-3 py-2 text-sm leading-tight text-gray-700 border ${
               errors.password && "border-red-500"
             } rounded appearance-none focus:outline-none focus:shadow-outline`}
             />
@@ -83,14 +78,14 @@ const router = useRouter();
         {errors.password?.message}
         </p>
         )}
-    <label htmlFor="confirmPassword" className="">
-    confirm password
+    <label htmlFor="confirmPassword" className="pt-7">
+    Confirm password
     </label>
     <input 
     type="password"
-    id="c_password"
+    id="confirmPassword"
     {...register("confirmPassword")}
-    className={`${
+    className={`w-full px-3 py-2 text-sm leading-tight text-gray-700 border ${
               errors.confirmPassword && "border-red-500"
             } rounded appearance-none focus:outline-none focus:shadow-outline`}
             />
@@ -100,9 +95,8 @@ const router = useRouter();
         </p>
         )}
     <button type="submit">register</button> 
-    </form>
     <Link href="/login">Login here!!!!!</Link>
-    </div>
+    </form>
     </div>
     )
 }

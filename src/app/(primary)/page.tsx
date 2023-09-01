@@ -1,19 +1,19 @@
 "use client"
-import { useSession } from "next-auth/react"
 import Link from "next/link"
+import { useAuth } from "../context/authContext";
 // use flexbox (flex with flex-col (grid))
 
 export default function Home() {
-    const { data: session } = useSession();
-
+    const { user } = useAuth();
     return(
+    //perhaps wrap the component with a layout idk which one
     <main>
     <div>
     <Link href="/">Polyhymnia</Link>
-    { session ? (
+    { user ? (
     <>
     <p>Your email: </p>
-    <pre>{session.user?.email}</pre>
+    <pre>{user.email}</pre>
     <Link href="/logout">logout</Link>
     </>
     ) : (

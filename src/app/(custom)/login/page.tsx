@@ -30,23 +30,22 @@ export default function Login() {
         });
 
         if (!res.ok) {
-            throw new Error("Failed to fetch data")
+            throw new Error(res.statusText)
         }
         return res.json()
 }
   return (
     <div className="flex flex-col min-h-full mx-auto max-w-2xl px-4 pt-8 pb-16">
       <div className="flex justify-center align-middle m-60">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
           <label htmlFor="email" className="">
             Email address
           </label>
           <input
             type="email"
             id="email"
-            placeholder="email"
             {...register("email")}
-            className={`${
+            className={`w-full px-3 py-2 text-sm leading-tight text-gray-700 border ${
               errors.email && "border-red-500"
             } rounded appearance-none focus:outline-none focus:shadow-outline`}
           />
@@ -62,7 +61,7 @@ export default function Login() {
             id="password"
             type="password"
             {...register("password")}
-            className={`${
+            className={`w-full px-3 py-2 text-sm leading-tight text-gray-700 border ${
               errors.password && "border-red-500"
             } rounded appearance-none focus:outline-none focus:shadow-outline`}
           />
