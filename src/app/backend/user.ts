@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { hashPassword } from '../utils';
+import { hashPassword } from '../utils.js';
 import { pool } from './database.js';
 import bcrypt from 'bcrypt'
 

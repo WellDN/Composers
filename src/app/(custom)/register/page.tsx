@@ -1,5 +1,4 @@
 "use client"
-import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod";
@@ -26,9 +25,8 @@ export default function Register() {
 resolver: zodResolver(registerSchema),
 });
 
-
    const onSubmit: SubmitHandler<RegisterSchema> = async (data) => {
-        const res = await fetch("/register", {
+        const res = await fetch("http://localhost:8080/register", {
             method: "POST", 
             headers: {
                 "Content-Type": "application/json",
@@ -40,20 +38,23 @@ resolver: zodResolver(registerSchema),
             throw new Error(res.statusText)
         }
 
-        return res.json()
+        return await res.json()
 }
 
     return(
+  <div className="flex flex-col flex-1">
     <div className="relative flex flex-1 flex-col items-center justify-center pb-16 pt-12">
+    <p className="mx-auto mb-16 h-6 w-auto">Polyhymnia </p>
     <form onSubmit={handleSubmit(onSubmit)} className="h-full max-w-sm" action="/register">
-    <label htmlFor="email" className="">
+    <div className="mb-6">
+    <label htmlFor="email">
     Email address
     </label>
     <input
     type="email"
     id="email"
     {...register("email")}
-    className={`w-96 px-2 py-1 text-sm leading-tight text-black border ${
+    className={`w-full px-2 mt-2 py-1 text-sm leading-tight text-black border ${
               errors.email && "border-red-500"
             } rounded appearance-none focus:outline-none focus:shadow-outline`}
             />
@@ -62,14 +63,16 @@ resolver: zodResolver(registerSchema),
     {errors.email?.message}
     </p>
 )}
-    <label htmlFor="password" className="pt-7">
+</div>
+<div className="mb-6">
+    <label htmlFor="password" className="block">
     Password
     </label>
     <input
     id="password"
     type="password"
     {...register("password")}
-    className={`w-full px-3 py-2 text-sm leading-tight text-gray-700 border ${
+    className={`w-full px-2 py-1 mt-2 text-sm leading-tight text-black border ${
               errors.password && "border-red-500"
             } rounded appearance-none focus:outline-none focus:shadow-outline`}
             />
@@ -78,14 +81,16 @@ resolver: zodResolver(registerSchema),
         {errors.password?.message}
         </p>
         )}
-    <label htmlFor="confirmPassword" className="pt-7">
+</div>
+    <div className="mb-6">
+    <label htmlFor="confirmPassword" className="block">
     Confirm password
     </label>
     <input 
     type="password"
     id="confirmPassword"
     {...register("confirmPassword")}
-    className={`w-full px-3 py-2 text-sm leading-tight text-gray-700 border ${
+    className={`w-full mt-2 px-2 py-1 text-sm leading-tight text-black border ${
               errors.confirmPassword && "border-red-500"
             } rounded appearance-none focus:outline-none focus:shadow-outline`}
             />
@@ -94,9 +99,24 @@ resolver: zodResolver(registerSchema),
         {errors.confirmPassword?.message}
         </p>
         )}
-    <button type="submit">register</button> 
-    <Link href="/login">Login here!!!!!</Link>
-    </form>
-    </div>
+</div>
+    <button type="submit" className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-slate-900 text-white hover:bg-slate-700 w-full">
+    register
+    </button> 
+          <p className="mt-8 text-center">
+          <a href="/password/reset" className="text-sm hover:underline">Forgot Password?</a>
+          </p>
+        </form>
+        </div>
+        <footer className="relative shrink-0"> 
+        <div className="space-y-4 text-sm sm:flex sm:items-center sm:justify-center sm:space-x-4 sm:space-y-0">
+        <p className="text-center sm:text-left">Already have an account?</p>
+        <a href="/login" className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 ring-1 ring-slate-900/10 hover:ring-slate-900/20">
+        <span> "Login " <span aria-hidden="true">→</span>
+        </span>
+        </a>
+        </div>
+        </footer>
+      </div>
     )
 }

@@ -5,7 +5,7 @@ export default function unique () {
       <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mt-20 !leading-[1.4]">
         Get our Weekly Developer&apos;s Tips via Email
       </h3>
-      <div className="">
+      <div>
         <input
           name="email"
           type="email"
