@@ -1,8 +1,9 @@
 "use client"
-import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/authContext";
 
 const loginSchema = z.object({
   email: z.string().min(1, { message: "Email is required" }).email(),
@@ -20,8 +21,12 @@ export default function Login() {
     resolver: zodResolver(loginSchema),
   });
 
+const { loginUser } = useAuth();
+
+const router = useRouter()
+
    const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
-        const res = await fetch("/login", {
+        const res = await fetch("http://localhost:8080/login", {
             method: "POST", 
             headers: {
                 "Content-Type": "application/json",
@@ -32,7 +37,10 @@ export default function Login() {
         if (!res.ok) {
             throw new Error(res.statusText)
         }
-        return res.json()
+        const userData = await res.json()
+        loginUser(userData);
+        
+        router.push("/")
 }
   return (
   <div className="flex flex-col flex-1">

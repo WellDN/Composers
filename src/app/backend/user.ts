@@ -7,10 +7,10 @@ export type User = {
     id: number;
     email: string;
     password: string;
+    userId: string;
 }
 
 export async function createUser(email: string, password: string): Promise<User> {
-// maybe here
   try {
     const hashedPassword = await hashPassword(password);
 

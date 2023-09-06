@@ -2,6 +2,8 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/authContext";
 
 const registerSchema = z.object({
 email: z.string().min(1, {message: "Email is required"}).email(),
@@ -17,6 +19,7 @@ type RegisterSchema = z.infer<typeof registerSchema>
 
 
 export default function Register() {
+    
     const {
         register,
         handleSubmit,
@@ -24,6 +27,10 @@ export default function Register() {
     } = useForm<RegisterSchema>({
 resolver: zodResolver(registerSchema),
 });
+
+const { registerUser } = useAuth();
+
+const router = useRouter()
 
    const onSubmit: SubmitHandler<RegisterSchema> = async (data) => {
         const res = await fetch("http://localhost:8080/register", {
@@ -37,9 +44,11 @@ resolver: zodResolver(registerSchema),
         if (!res.ok) {
             throw new Error(res.statusText)
         }
-
-        return await res.json()
-}
+        const userData = await res.json()
+        registerUser(userData);
+        
+        router.push("/")
+  }
 
     return(
   <div className="flex flex-col flex-1">

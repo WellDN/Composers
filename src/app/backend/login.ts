@@ -22,18 +22,18 @@ export async function login(req: Request, res: Response) {
 
         res.cookie('token', token, { httpOnly: true })
 
-        res.status(200).send('Login successful');
+        res.status(200).json({ Message: 'Login successful', token });
     } catch (error) {
         console.error('Error during login: ', error);
-        return res.status(500).send('Internal server error');
+        return res.status(500).json('Internal server error');
     }
 }
 export function logout(res: Response) {
     try {
         res.cookie('token', '', { expires: new Date(0), httpOnly: true });
-        return res.status(200).send('Logged out sucessfully');
+        return res.status(200).json('Logged out sucessfully');
     } catch(error) {
         console.error('unable to logout', error);
-        return res.status(500).send('Internal server error');
+        return res.status(500).json('Internal server error');
     }
 }

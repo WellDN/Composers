@@ -1,12 +1,11 @@
 "use client"
 import Link from "next/link"
 import { useAuth } from "../context/authContext";
-// use flexbox (flex with flex-col (grid))
 
 export default function Home() {
     const { user } = useAuth();
+
     return(
-    //perhaps wrap the component with a layout idk which one
     <main>
     <div>
     <Link href="/">Polyhymnia</Link>

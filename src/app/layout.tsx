@@ -10,7 +10,9 @@ export default function RootLayout({
   return (
   <AuthProvider>
     <html lang="en" className='bg-rwood h-full'>
-      <body className="font-sans antialiased min-h-full flex flex-col [overflow-anchor:none]">{children}</body>
+      <body className="font-sans antialiased min-h-full flex flex-col [overflow-anchor:none]">
+      {children}
+      </body>
     </html>
     </AuthProvider>
   )
