@@ -5,9 +5,9 @@ import { User } from '../backend/user';
 type AuthContextProps = {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
-  loginUser: (userData: User) => void; // Add this line
-  registerUser: (userData: User) => void; // Add this line
-  logoutUser: () => void; // Add this line
+  loginUser: (userData: User) => void;
+  registerUser: (userData: User) => void;
+  logoutUser: () => void;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);

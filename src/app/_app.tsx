@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps<PageProps>) {
           id: 0,
           email: "",
           password: "",
-          userId: decoded.userId as string,
+          userId: decoded.userId as number,
       };
       setUser(user);
     } catch (error) {

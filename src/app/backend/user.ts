@@ -7,7 +7,7 @@ export type User = {
     id: number;
     email: string;
     password: string;
-    userId: string;
+    userId: number;
 }
 
 export async function createUser(email: string, password: string): Promise<User> {

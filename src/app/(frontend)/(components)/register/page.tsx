@@ -53,7 +53,7 @@ const router = useRouter()
     return(
   <div className="flex flex-col flex-1">
     <div className="relative flex flex-1 flex-col items-center justify-center pb-16 pt-12">
-    <p className="mx-auto mb-16 h-6 w-auto">Polyhymnia </p>
+    <p className="mx-auto mb-16 h-6 w-auto">Polyhymnia</p>
     <form onSubmit={handleSubmit(onSubmit)} className="h-full max-w-sm" action="/register">
     <div className="mb-6">
     <label htmlFor="email">
