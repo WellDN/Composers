@@ -11,6 +11,7 @@ export default function Home() {
     <Link href="/">Polyhymnia</Link>
     { user ? (
     <>
+    <Link href="/profile">Profile</Link>
     <p>Your email: </p>
     <pre>{user.email}</pre>
     <Link href="/logout">logout</Link>

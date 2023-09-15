@@ -22,7 +22,7 @@ export async function login(req: Request, res: Response) {
 
         res.cookie('token', token, { httpOnly: true })
 
-        res.status(200).json({ Message: 'Login successful', token });
+        res.status(200).json({ user, token });
     } catch (error) {
         console.error('Error during login: ', error);
         return res.status(500).json('Internal server error');

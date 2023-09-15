@@ -26,6 +26,7 @@ const { loginUser } = useAuth();
 const router = useRouter()
 
    const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
+       try {
         const res = await fetch("http://localhost:8080/login", {
             method: "POST", 
             headers: {
@@ -37,10 +38,19 @@ const router = useRouter()
         if (!res.ok) {
             throw new Error(res.statusText)
         }
-        const userData = await res.json()
-        loginUser(userData);
+
+        const { user, token } = await res.json()
+        console.log('Received user data:', user)
+
+
+        loginUser(user);
+
+        localStorage.setItem('token', token);
         
         router.push("/")
+       } catch (error) {
+           console.error('Error during login', error)
+       }
 }
   return (
   <div className="flex flex-col flex-1">

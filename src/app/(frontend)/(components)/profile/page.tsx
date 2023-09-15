@@ -1,34 +1,17 @@
-// TODO: a profile for each user url: https://polyhymnia/username and it is unique page
-/*
-    import withSession from '../lib/session'
-import Layout from '../components/Layout'
- 
-export const getServerSideProps = withSession(async function ({ req, res }) {
-  const { user } = req.session
- 
+"use client"
+import { useAuth } from "@/app/context/authContext";
+
+export default function Profile() {
+  const { user } = useAuth();
+  
   if (!user) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    }
+      // return an error here if its not user redirect to registration path
+      return <p>Please log in to view your profile.</p>;
   }
- 
-  return {
-    props: { user },
-  }
-})
- 
-const Profile = ({ user }) => {
-  // Show the user. No loading state is required
-  return (
-    <Layout>
-      <h1>Your Profile</h1>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-    </Layout>
-  )
+    return (
+      <div>
+        <h2>Your Profile</h2>
+        <p>Email: {user.email}</p>
+      </div>
+    );
 }
- 
-export default Profile
-}*/
