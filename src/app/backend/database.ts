@@ -9,7 +9,7 @@ export const pool = new Pool({
     password: process.env.PGPASSWORD,
     port: Number(process.env.PGPORT)
 });
- 
+
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
     console.error('Error connecting to the database', err);

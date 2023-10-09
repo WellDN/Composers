@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/authContext";
+import Link from "next/link";
 
 const loginSchema = z.object({
   email: z.string().min(1, { message: "Email is required" }).email(),
@@ -93,21 +94,26 @@ const router = useRouter()
             </p>
           )}
           </div>
-          <button type="submit" className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-slate-900 text-white hover:bg-slate-700 w-full">
+          <button
+          type="submit"
+          className=
+          "inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-slate-900 text-white hover:bg-slate-700 w-full">
           Login
           </button>
           <p className="mt-8 text-center">
-          <a href="/password/reset" className="text-sm hover:underline">Forgot Password?</a>
+          <Link href="/password/reset" className="text-sm hover:underline">Forgot Password?</Link>
           </p>
         </form>
         </div>
         <footer className="relative shrink-0"> 
         <div className="space-y-4 text-sm sm:flex sm:items-center sm:justify-center sm:space-x-4 sm:space-y-0">
         <p className="text-center sm:text-left">Don't have an account?</p>
-        <a href="/register" className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 ring-1 ring-slate-900/10 hover:ring-slate-900/20">
+        <Link href="/register"
+        className=
+        "inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 ring-1 ring-slate-900/10 hover:ring-slate-900/20">
         <span> "Register " <span aria-hidden="true">→</span>
         </span>
-        </a>
+        </Link>
         </div>
         </footer>
       </div>

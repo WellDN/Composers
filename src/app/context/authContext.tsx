@@ -1,6 +1,5 @@
 "use client"
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User } from '../backend/user';
 
 type UserData = {
     token: string;
@@ -8,8 +7,8 @@ type UserData = {
 }
 
 type AuthContextProps = {
-  user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  user: UserData | null;
+  setUser: React.Dispatch<React.SetStateAction<UserData | null>>;
   loginUser: (userData: UserData) => void;
   registerUser: (userData: UserData) => void;
   logout: () => void;
@@ -18,18 +17,18 @@ type AuthContextProps = {
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC <{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null); 
+  const [user, setUser] = useState<UserData | null>(null); 
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            setUser({ id: 1, email: 'l@gmail.com', password: 'qweqweqwe', userId: 0 });
+            setUser(null);
     }
 }, []);
 
 const loginUser = (userData: UserData) => {
         localStorage.setItem('token', userData.token);
-            setUser({ id: 1, email: 'l@gmail.com', password: 'qweqweqwe', userId: 0 });
+        setUser(userData);
 }
 
 const registerUser = (userData: UserData) => {

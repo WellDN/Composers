@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link"
 import { useAuth } from "../../context/authContext";
+import { handleLogout } from "@/app/backend/logout";
 
 export default function Home() {
     const { user } = useAuth();
@@ -14,7 +15,7 @@ export default function Home() {
     <Link href="/profile">Profile</Link>
     <p>Your email: </p>
     <pre>{user.email}</pre>
-    <Link href="/logout">logout</Link>
+    <button onClick={() => handleLogout()}>Logout</button>
     </>
     ) : (
     <>
